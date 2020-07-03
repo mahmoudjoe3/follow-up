@@ -10,9 +10,9 @@ import java.util.List;
 public class Item_Repositary {
     private Item_Dao mitem_dao;
     private LiveData<List<Item_Entity>> mlist;
-    public void Item_Repositary(Application app)
-    {
-        followUpDataBase mdatabase = followUpDataBase.getInstance(app);
+
+    public Item_Repositary(Application application) {
+        followUpDataBase mdatabase = followUpDataBase.getInstance(application);
         mitem_dao=mdatabase.getItemDao();
         mlist=mitem_dao.getAllItem();
     }
@@ -29,11 +29,11 @@ public class Item_Repositary {
     {
         new deleteAsyncTask(mitem_dao).execute(item);
     }
-    public LiveData<List<Item_Entity>> getAllItem(Item_Entity item)
+    public LiveData<List<Item_Entity>> getAllItem()
     {
         return mlist;
     }
-    public void deleteAllItem(Item_Entity item)
+    public void deleteAllItem()
     {
         new clearAsyncTask(mitem_dao).execute();
     }
