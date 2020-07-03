@@ -1,8 +1,10 @@
-package com.example.followup;
+package com.example.followup.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.followup.R;
 
 public class MainActivity extends AppCompatActivity {
 
