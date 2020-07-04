@@ -3,29 +3,39 @@ package com.example.followup.Model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "item")
-public class Item_Entity {
+public class Item_Entity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private Integer id;
-    private String name;
+    private String title;
+    private Integer weekNo;
     private Integer age;
-    private Integer weight;
-    private Integer height;
-    private Integer burn_rate;
-    private Integer fat_rate;
-    private Integer water_rate;
-    private Integer emoji_imgRes;
+    private String gender;
+    private Double weight;
+    private Double height;
+    private Double burn_rate;
+    private Double fat_percent;
+    private Double water_percent;
+    private Integer emojiRes;
+    private String Date;
+    private String comment;
 
-    public Item_Entity(String name, Integer age, Integer weight, Integer height, Integer burn_rate, Integer fat_rate, Integer water_rate, Integer emoji_imgRes) {
-        this.name = name;
+    public Item_Entity(String title, Integer weekNo, Integer age, String gender, Double weight, Double height, Double burn_rate, Double fat_percent, Double water_percent, Integer emojiRes, String date, String comment) {
+        this.title = title;
+        this.weekNo = weekNo;
         this.age = age;
+        this.gender = gender;
         this.weight = weight;
         this.height = height;
         this.burn_rate = burn_rate;
-        this.fat_rate = fat_rate;
-        this.water_rate = water_rate;
-        this.emoji_imgRes = emoji_imgRes;
+        this.fat_percent = fat_percent;
+        this.water_percent = water_percent;
+        this.emojiRes = emojiRes;
+        Date = date;
+        this.comment = comment;
     }
 
     public void setId(Integer id) {
@@ -36,35 +46,51 @@ public class Item_Entity {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
+    }
+
+    public Integer getWeekNo() {
+        return weekNo;
     }
 
     public Integer getAge() {
         return age;
     }
 
-    public Integer getWeight() {
+    public String getGender() {
+        return gender;
+    }
+
+    public Double getWeight() {
         return weight;
     }
 
-    public Integer getHeight() {
+    public Double getHeight() {
         return height;
     }
 
-    public Integer getBurn_rate() {
+    public Double getBurn_rate() {
         return burn_rate;
     }
 
-    public Integer getFat_rate() {
-        return fat_rate;
+    public Double getFat_percent() {
+        return fat_percent;
     }
 
-    public Integer getWater_rate() {
-        return water_rate;
+    public Double getWater_percent() {
+        return water_percent;
     }
 
-    public Integer getEmoji_imgRes() {
-        return emoji_imgRes;
+    public Integer getEmojiRes() {
+        return emojiRes;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public String getComment() {
+        return comment;
     }
 }

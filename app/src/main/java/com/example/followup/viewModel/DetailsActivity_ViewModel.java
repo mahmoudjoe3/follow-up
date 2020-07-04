@@ -4,12 +4,10 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 import com.example.followup.Model.Item_Entity;
 import com.example.followup.Model.Item_Repositary;
 
-import java.util.List;
 
 public class DetailsActivity_ViewModel extends AndroidViewModel {
     private Item_Repositary mitemRepositary;
