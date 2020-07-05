@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="6dp">
-<RelativeLayout
+
+    <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-<TextView
+    android:layout_height="match_parent">
+
+        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_title"
@@ -25,7 +29,7 @@
         android:orientation="horizontal"
         >
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/txt_weight"
@@ -34,7 +38,7 @@
             android:textColor="@color/color4"
             />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/txt_weekNo"
@@ -43,8 +47,19 @@
             android:textColor="@color/color4"
 
             />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear"
+        android:layout_marginBottom="6dp"
+        android:layout_marginStart="10dp"
+        android:orientation="horizontal"
+        >
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/txt_fat"
@@ -54,7 +69,7 @@
 
             />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/txt_water"
@@ -64,13 +79,16 @@
 
             />
     </LinearLayout>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_above="@id/linear"
-        android:src="@drawable/ic_very_dissatisfied"
-        android:id="@+id/img_emoji"/>
+
+        <ImageView
+            android:id="@+id/img_emoji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/linear"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/ic_very_dissatisfied" />
 
 
 </RelativeLayout>

@@ -1,9 +1,16 @@
 package com.example.followup.view.ui;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.annotation.SuppressLint;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +27,7 @@ import com.example.followup.view.logic.InBodyCalculation;
 import com.example.followup.viewModel.DetailsActivity_ViewModel;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 public class detailsActivity extends AppCompatActivity {
@@ -29,7 +37,8 @@ public class detailsActivity extends AppCompatActivity {
     public final static String EXTRA_PROCESS_TYPE ="com.example.followup.view.ui.PROCESS_TYPE";
     private Item_Entity mItem;
     private String process="";
-    TextView mDate;
+    private String hint="";
+    TextView mDate,mHint;
     EditText mTitle, mWeekNo, mAge, mWeight, mHeight, mBurnRate, mFatPercent, mWaterPercent, mComment;
     ImageView mEmojiRes,mBurnRateBTN;
     Spinner mgenderspiner;
@@ -45,24 +54,33 @@ public class detailsActivity extends AppCompatActivity {
         mViewModel= ViewModelProviders.of(this).get(DetailsActivity_ViewModel.class);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_exit);
 
-        mItem=(Item_Entity) getIntent().getSerializableExtra(EXTRA_ITEM_KEY);
-        process=getIntent().getStringExtra(EXTRA_PROCESS_TYPE);
-        if(process.equalsIgnoreCase("update")) {
-            setTitle("Update your state");
-            AssignValues();
-        }
-        else {
-            setTitle("Add New State");
-            //date
-            Calendar calendar = Calendar.getInstance();
-            String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
-            mDate.setText(currentDate);
+        if(getIntent().hasExtra(EXTRA_PROCESS_TYPE)) {
+            process = getIntent().getStringExtra(EXTRA_PROCESS_TYPE);
+            if (process.equalsIgnoreCase("update")) {
+                setTitle("Update your state");
+                mItem = (Item_Entity) getIntent().getSerializableExtra(EXTRA_ITEM_KEY);
+                AssignValues();
+            } else {
+                setTitle("Add New State");
+                //date
+                Calendar calendar = Calendar.getInstance();
+                String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+                mDate.setText(currentDate);
+            }
         }
 
         mBurnRateBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String gender=mgenderspiner.getSelectedItem().toString();
+
+                if(gender.isEmpty()||mHeight.getText().toString().isEmpty()||mWeight.getText().toString().isEmpty()||mAge.getText().toString().isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(), "Fill The Entire fields!!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Double height=Double.valueOf(mHeight.getText().toString());
                 Double weight=Double.valueOf(mWeight.getText().toString());
                 Integer age=Integer.parseInt(mAge.getText().toString());
@@ -71,20 +89,26 @@ public class detailsActivity extends AppCompatActivity {
                 double FatPercent=InBodyCalculation.getFatPercent(height,weight,age,gender);
                 double WaterPercent=InBodyCalculation.getWaterPercent(height,weight,age,gender);
 
+                DecimalFormat format=new DecimalFormat("#.00");
+                BurnRate= Double.parseDouble(format.format(BurnRate));
+                WaterPercent= Double.parseDouble(format.format(WaterPercent));
+                FatPercent= Double.parseDouble(format.format(FatPercent));
+
                 mBurnRate.setText(String.valueOf(BurnRate));
                 mFatPercent.setText(String.valueOf(FatPercent));
                 mWaterPercent.setText(String.valueOf(WaterPercent));
                 mEmojiRes.setImageResource(getEmoji(FatPercent,gender));
+                mHint.setText(hint);
             }
         });
     }
 
     private void AssignValues() {
         mTitle.setText(mItem.getTitle());
-        mWeekNo.setText(mItem.getWeekNo());
-        mAge.setText(mItem.getAge());
+        mWeekNo.setText(""+mItem.getWeekNo());
+        mAge.setText(""+mItem.getAge());
         mWeight.setText(String.valueOf(mItem.getWeight()));
-        int pos=(mItem.getGender().equalsIgnoreCase("male"))?1:0;
+        int pos=(mItem.getGender().equalsIgnoreCase("male"))?0:1;
         mgenderspiner.setSelection(pos);
         mDate.setText(String.valueOf(mItem.getDate()));
         mHeight.setText(String.valueOf(mItem.getHeight()));
@@ -97,34 +121,82 @@ public class detailsActivity extends AppCompatActivity {
     }
 
     private int getEmoji(double fatPercent,String gender) {
-        int imgID=0;
+        int imgID=R.drawable.ic_dead;
         if(gender.equalsIgnoreCase("female")) {
             if(fatPercent<10)//dead
+            {
+                hint="you are near to Die.";
+                mHint.setTextColor(getResources().getColor(R.color.color4));
                 return R.drawable.ic_dead;
+            }
             else if(fatPercent>=10&&fatPercent<=13)//Essential  fat
+            {
+                hint="you are too thin ";
+                mHint.setTextColor(getResources().getColor(R.color.color4));
                 return R.drawable.ic_very_dissatisfied;
+            }
             else if(fatPercent>13&&fatPercent<=20)//Athletes
+            {
+                mHint.setTextColor(getResources().getColor(R.color.color3));
+                hint="Athletes, but preferred to gain some fat";
                 return R.drawable.ic_less_satisfied;
+            }
             else if(fatPercent>20&&fatPercent<=24)//Fitness
+            {
+                hint="you have the perfect body ";
+                mHint.setTextColor(getResources().getColor(R.color.color1));
                 return R.drawable.ic_very_satisfied;
+            }
             else if(fatPercent>24&&fatPercent<=31)//Average
+            {
+                hint="you are in Average";
+                mHint.setTextColor(getResources().getColor(R.color.color2));
                 return R.drawable.ic_satisfied;
+            }
             else if(fatPercent>31)//Obese
+            {
+                hint="its preferred to loss some weight";
+                mHint.setTextColor(getResources().getColor(R.color.color4));
                 return R.drawable.ic_very_dissatisfied;
+            }
         }
         else{
             if(fatPercent<2)//dead
+            {
+                hint="you are near to Die.";
+                mHint.setTextColor(getResources().getColor(R.color.color4));
                 return R.drawable.ic_dead;
+            }
             else if(fatPercent>=2&&fatPercent<=5)//Essential  fat
+            {
+                mHint.setTextColor(getResources().getColor(R.color.color4));
+                hint="you are too thin ";
                 return R.drawable.ic_very_dissatisfied;
+            }
             else if(fatPercent>5&&fatPercent<=13)//Athletes
+            {
+                mHint.setTextColor(getResources().getColor(R.color.color3));
+                hint="Athletes, but preferred to gain some fat";
                 return R.drawable.ic_less_satisfied;
+            }
             else if(fatPercent>13&&fatPercent<=17)//Fitness
+            {
+                mHint.setTextColor(getResources().getColor(R.color.color1));
+                hint="you have the perfect body ";
                 return R.drawable.ic_very_satisfied;
+            }
             else if(fatPercent>17&&fatPercent<=24)//Average
+            {
+                mHint.setTextColor(getResources().getColor(R.color.color2));
+                hint="you are in Average";
                 return R.drawable.ic_satisfied;
+            }
             else if(fatPercent>25)//Obese
+            {
+                mHint.setTextColor(getResources().getColor(R.color.color4));
+                hint="its preferred to loss some weight";
                 return R.drawable.ic_very_dissatisfied;
+            }
         }
         return imgID;
     }
@@ -144,6 +216,7 @@ public class detailsActivity extends AppCompatActivity {
         mgenderspiner=findViewById(R.id.d_gender);
         mBurnRateBTN=findViewById(R.id.d_burnRateProcces_btn);
         mEmojiRes=findViewById(R.id.d_emoji);
+        mHint=findViewById(R.id.d_hint);
     }
 
     @Override
@@ -162,25 +235,31 @@ public class detailsActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     private void saveItem() {
         //save
         if(process.equalsIgnoreCase("insert")) {
-            ((ImageView)findViewById(R.id.save_btn)).setImageResource(R.drawable.ic_save);
+            Drawable drawable;
+
             mBurnRateBTN.performClick();
             Item_Entity item = BuildItem();
-            if (item != null)
+            if (item != null) {
                 mViewModel.insert(item);
+                finish();
+            }
         }
         else//update
         {
-            ((ImageView)findViewById(R.id.save_btn)).setImageResource(R.drawable.ic_system_update_alt_black_24dp);
+            //((ImageView)findViewById(R.id.save_btn)).setImageResource(R.drawable.ic_system_update_alt_black_24dp);
             mBurnRateBTN.performClick();
             Item_Entity item = BuildItem();
             if (item != null) {
                 item.setId(mItem.getId());
                 mViewModel.update(item);
+                finish();
             }
         }
+
     }
 
     private Item_Entity BuildItem() {
@@ -189,6 +268,7 @@ public class detailsActivity extends AppCompatActivity {
         String  Title, gender, date, Comment;
         Integer Weekno,Age, emojiRes;
         Double Weight, Height, BurnRate, FatPercent, WaterPercent;
+
         Title=mTitle.getText().toString();
         gender=mgenderspiner.getSelectedItem().toString();
         date=mDate.getText().toString();
@@ -200,7 +280,8 @@ public class detailsActivity extends AppCompatActivity {
         BurnRate=Double.valueOf(mBurnRate.getText().toString());
         FatPercent=Double.valueOf(mFatPercent.getText().toString());
         WaterPercent=Double.valueOf(mWaterPercent.getText().toString());
-        emojiRes=mEmojiRes.getId();
+        emojiRes=getEmoji(FatPercent,gender);
+
         if(Title.isEmpty()||Comment.isEmpty()||gender.isEmpty()||mAge.getText().toString().isEmpty()||mWeight.getText().toString().isEmpty()||mHeight.getText().toString().isEmpty()||mWeekNo.getText().toString().isEmpty()) {
             Toast.makeText(this, "Fill The Entire fields!!", Toast.LENGTH_SHORT).show();
             return null;

@@ -23,6 +23,10 @@ public class Item_Entity implements Serializable {
     private String Date;
     private String comment;
 
+    public Item_Entity()
+    {
+
+    }
     public Item_Entity(String title, Integer weekNo, Integer age, String gender, Double weight, Double height, Double burn_rate, Double fat_percent, Double water_percent, Integer emojiRes, String date, String comment) {
         this.title = title;
         this.weekNo = weekNo;
@@ -40,6 +44,54 @@ public class Item_Entity implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setWeekNo(Integer weekNo) {
+        this.weekNo = weekNo;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public void setHeight(Double height) {
+        this.height = height;
+    }
+
+    public void setBurn_rate(Double burn_rate) {
+        this.burn_rate = burn_rate;
+    }
+
+    public void setFat_percent(Double fat_percent) {
+        this.fat_percent = fat_percent;
+    }
+
+    public void setWater_percent(Double water_percent) {
+        this.water_percent = water_percent;
+    }
+
+    public void setEmojiRes(Integer emojiRes) {
+        this.emojiRes = emojiRes;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Integer getId() {

@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ui.MainActivity">
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/Container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/custom_item"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addNew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -17,5 +18,15 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:src="@drawable/ic_add"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/undo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/ic_undo"
+        android:layout_above="@id/addNew"
+        android:visibility="gone"/>
 
 </RelativeLayout>
