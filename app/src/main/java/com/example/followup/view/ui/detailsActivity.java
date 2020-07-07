@@ -1,20 +1,15 @@
 package com.example.followup.view.ui;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.annotation.SuppressLint;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -40,8 +35,9 @@ public class detailsActivity extends AppCompatActivity {
     private String hint="";
     TextView mDate,mHint;
     EditText mTitle, mWeekNo, mAge, mWeight, mHeight, mBurnRate, mFatPercent, mWaterPercent, mComment;
-    ImageView mEmojiRes,mBurnRateBTN;
-    Spinner mgenderspiner;
+    ImageView mEmojiRes;
+    Spinner mgenderspiner, mlevelSpiner;
+    Button mBurnRateBTN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +56,8 @@ public class detailsActivity extends AppCompatActivity {
                 setTitle("Update your state");
                 mItem = (Item_Entity) getIntent().getSerializableExtra(EXTRA_ITEM_KEY);
                 AssignValues();
-            } else {
+            }
+            else {
                 setTitle("Add New State");
                 //date
                 Calendar calendar = Calendar.getInstance();
@@ -74,7 +71,7 @@ public class detailsActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String gender=mgenderspiner.getSelectedItem().toString();
-
+                int level=mlevelSpiner.getSelectedItemPosition();
                 if(gender.isEmpty()||mHeight.getText().toString().isEmpty()||mWeight.getText().toString().isEmpty()||mAge.getText().toString().isEmpty())
                 {
                     Toast.makeText(getApplicationContext(), "Fill The Entire fields!!", Toast.LENGTH_SHORT).show();
@@ -88,6 +85,7 @@ public class detailsActivity extends AppCompatActivity {
                 double BurnRate= InBodyCalculation.getBurnRate(height,weight,age,gender);
                 double FatPercent=InBodyCalculation.getFatPercent(height,weight,age,gender);
                 double WaterPercent=InBodyCalculation.getWaterPercent(height,weight,age,gender);
+                String instruction=InBodyCalculation.getInstruction(height,weight,age,gender,level,FatPercent);
 
                 DecimalFormat format=new DecimalFormat("#.00");
                 BurnRate= Double.parseDouble(format.format(BurnRate));
@@ -97,8 +95,11 @@ public class detailsActivity extends AppCompatActivity {
                 mBurnRate.setText(String.valueOf(BurnRate));
                 mFatPercent.setText(String.valueOf(FatPercent));
                 mWaterPercent.setText(String.valueOf(WaterPercent));
-                mEmojiRes.setImageResource(getEmoji(FatPercent,gender));
+                mEmojiRes.setImageResource(getEmojiSetHint(FatPercent,gender));
                 mHint.setText(hint);
+
+                if(!save)
+                    mComment.setText(instruction);
             }
         });
     }
@@ -117,10 +118,11 @@ public class detailsActivity extends AppCompatActivity {
         mWaterPercent.setText(String.valueOf(mItem.getWater_percent()));
         mComment.setText(String.valueOf(mItem.getComment()));
         mEmojiRes.setImageResource(mItem.getEmojiRes());
-
+        getEmojiSetHint(Double.parseDouble(mFatPercent.getText().toString()), mgenderspiner.getSelectedItem().toString());
+        mHint.setText(hint);
     }
 
-    private int getEmoji(double fatPercent,String gender) {
+    private int getEmojiSetHint(double fatPercent, String gender) {
         int imgID=R.drawable.ic_dead;
         if(gender.equalsIgnoreCase("female")) {
             if(fatPercent<10)//dead
@@ -198,6 +200,7 @@ public class detailsActivity extends AppCompatActivity {
                 return R.drawable.ic_very_dissatisfied;
             }
         }
+
         return imgID;
     }
 
@@ -217,11 +220,18 @@ public class detailsActivity extends AppCompatActivity {
         mBurnRateBTN=findViewById(R.id.d_burnRateProcces_btn);
         mEmojiRes=findViewById(R.id.d_emoji);
         mHint=findViewById(R.id.d_hint);
+        mlevelSpiner=findViewById(R.id.d_level);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.details_menu,menu);
+        MenuItem item=menu.getItem(0);
+        if(process.equalsIgnoreCase("insert"))
+            item.setIcon(R.drawable.ic_save);
+        else
+            item.setIcon(R.drawable.ic_system_update_alt_black_24dp);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -229,18 +239,17 @@ public class detailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
             case R.id.save_btn:
-                saveItem();
+                saveItem(item);
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
+    boolean save=false;
     @SuppressLint("RestrictedApi")
-    private void saveItem() {
+    private void saveItem(MenuItem itemview) {
         //save
         if(process.equalsIgnoreCase("insert")) {
-            Drawable drawable;
-
+            save=true;
             mBurnRateBTN.performClick();
             Item_Entity item = BuildItem();
             if (item != null) {
@@ -250,7 +259,7 @@ public class detailsActivity extends AppCompatActivity {
         }
         else//update
         {
-            //((ImageView)findViewById(R.id.save_btn)).setImageResource(R.drawable.ic_system_update_alt_black_24dp);
+            save=true;
             mBurnRateBTN.performClick();
             Item_Entity item = BuildItem();
             if (item != null) {
@@ -280,7 +289,7 @@ public class detailsActivity extends AppCompatActivity {
         BurnRate=Double.valueOf(mBurnRate.getText().toString());
         FatPercent=Double.valueOf(mFatPercent.getText().toString());
         WaterPercent=Double.valueOf(mWaterPercent.getText().toString());
-        emojiRes=getEmoji(FatPercent,gender);
+        emojiRes= getEmojiSetHint(FatPercent,gender);
 
         if(Title.isEmpty()||Comment.isEmpty()||gender.isEmpty()||mAge.getText().toString().isEmpty()||mWeight.getText().toString().isEmpty()||mHeight.getText().toString().isEmpty()||mWeekNo.getText().toString().isEmpty()) {
             Toast.makeText(this, "Fill The Entire fields!!", Toast.LENGTH_SHORT).show();

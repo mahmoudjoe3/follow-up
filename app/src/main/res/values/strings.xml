@@ -4,4 +4,11 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+    <string-array name="level">
+        <item>0.Little or no exercise</item>
+        <item>1.Exercise (1–3 times per week)</item>
+        <item>2.Exercise (3–5 times per week)</item>
+        <item>3.Exercise (6–7 times per week)</item>
+        <item>4.Very hard exercise (Twice per day)</item>
+    </string-array>
 </resources>

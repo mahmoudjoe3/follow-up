@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         mViewModel= ViewModelProviders.of(this).get(MainActivity_viewModel.class);
-        setTitle("I Watching You");
+        setTitle("I am Watching You");
         BuildAdapter();
         observe();
         mundo_BTN=findViewById(R.id.undo);
