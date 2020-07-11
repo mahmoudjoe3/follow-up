@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.followup">
+    package="com.MahmoudJoe333.followup">
 
     <application
         android:allowBackup="true"
@@ -9,9 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.ui.detailsActivity"
-            android:parentActivityName=".view.ui.MainActivity"></activity>
-        <activity android:name=".view.ui.MainActivity">
+        <activity android:name="com.MahmoudJoe333.followup.view.ui.detailsActivity"
+            android:parentActivityName="com.MahmoudJoe333.followup.view.ui.MainActivity"
+            android:screenOrientation="locked"/>
+        <activity android:name="com.MahmoudJoe333.followup.view.ui.MainActivity"
+            android:screenOrientation="locked">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

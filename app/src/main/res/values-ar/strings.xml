@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">متعقب اللياقه</string>
+    <string name="mainTitle">انا شايفك !!</string>
+    <string name="datails_Title_insert">اضافه متابعه جديده</string>
+    <string name="datails_Title_update">تعديل المتابعه</string>
+    <string name="menu_saveBTN">حفظ</string>
+    <string name="item_title">العنوان</string>
+    <string name="item_weight">الوزن:</string>
+    <string name="item_weekno">الاسبوع:</string>
+    <string name="item_fat">الدهون:</string>
+    <string name="item_water">الماء:</string>
+    <string name="main_noNote">لا يوجد اى ملاحظه حتى الان!!</string>
+    <string name="d_date">التاريخ</string>
+    <string name="d_title">العنوان</string>
+    <string name="d_age">العمر</string>
+    <string name="d_week">الاسبوع</string>
+    <string name="d_weight">الوزن</string>
+    <string name="d_height">الطول</string>
+    <string name="d_calculate_inbody">احسب الInbody</string>
+    <string name="d_burn_rate">معدل الحرق</string>
+    <string name="d_fat_percent">نسبه الدهون</string>
+    <string name="d_water_percent">نسبه الماء</string>
+    <string name="d_any_comment">التعليق </string>
+    <string-array name="gender">
+        <item>ذكر</item>
+        <item>أنثى</item>
+    </string-array>
+
+    <string-array name="inBody_data">
+        <item>انت تحتاج </item>
+        <item> اسابيع لكى تحصل على الجسم المثالى</item>
+        <item>2.لكى تفقد 0.5 كيلو فى الاسبوع: </item>
+        <item> كالوري باليوم</item>
+        <item>3.لكى تفقد كيلو فى الاسبوع: </item>
+        <item>2.لكى تكتسب 0.5 كيلو فى الاسبوع: </item>
+        <item>3.لكى تكتسب كيلو فى الاسبوع: </item>
+        <item>الكالورى الطبيعى لك </item>
+        <item>1.للحفاظ على وزنك </item>
+        <item>من الافضل المحافظه على وزنك وبالاخص نسبه الدهون</item>
+    </string-array>
+    <string-array name="level">
+        <item>لا يوجد نشاط يومى</item>
+        <item>(1–3)مرات بالاسبوع</item>
+        <item>(3–5)مرات بالاسبوع</item>
+        <item>(6–7)مرات بالاسبوع</item>
+        <item>مرتان باليوم</item>
+    </string-array>
+</resources>

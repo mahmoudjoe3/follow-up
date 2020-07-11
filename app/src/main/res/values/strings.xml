@@ -1,14 +1,48 @@
 <resources>
     <string name="app_name">Fitness Tracker</string>
+    <string name="mainTitle">I am Watching You</string>
+    <string name="datails_Title_insert">Add New State</string>
+    <string name="datails_Title_update">Update your state</string>
+    <string name="menu_saveBTN">save</string>
+    <string name="item_title">Title</string>
+    <string name="item_weight">Weight:</string>
+    <string name="item_weekno">WeekNo:</string>
+    <string name="item_fat">Fat:</string>
+    <string name="item_water">Water:</string>
+    <string name="main_noNote">there is no Note yet please Add One!!</string>
+    <string name="d_date">date</string>
+    <string name="d_title">Title</string>
+    <string name="d_age">Age</string>
+    <string name="d_week">Week</string>
+    <string name="d_weight">Weight</string>
+    <string name="d_height">Height</string>
+    <string name="d_calculate_inbody">Calculate inbody</string>
+    <string name="d_burn_rate">Burn Rate (Kcal/day)</string>
+    <string name="d_fat_percent">Fat Percent %</string>
+    <string name="d_water_percent">Water Percent %</string>
+    <string name="d_any_comment">Any comment</string>
     <string-array name="gender">
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
+    <string-array name="inBody_data">
+        <item>You need </item>
+        <item> Weeks to get the fitness body</item>
+        <item>2.To lose 0.5 kg/week: </item>
+        <item> Kcal/day</item>
+        <item>3.To lose 1 kg/week: </item>
+        <item>2.To gain 0.5 kg/week:</item>
+        <item>3.To gain 1 kg/week</item>
+        <item>Your normal Calories is </item>
+        <item>1.To maintain your weight: </item>
+        <item>its better to maintain your weight</item>
+    </string-array>
     <string-array name="level">
-        <item>0.Little or no exercise</item>
-        <item>1.Exercise (1–3 times per week)</item>
-        <item>2.Exercise (3–5 times per week)</item>
-        <item>3.Exercise (6–7 times per week)</item>
-        <item>4.Very hard exercise (Twice per day)</item>
+        <item>Little or no exercise</item>
+        <item>Exercise (1–3 times per week)</item>
+        <item>Exercise (3–5 times per week)</item>
+        <item>Exercise (6–7 times per week)</item>
+        <item>Very hard exercise (Twice per day)</item>
     </string-array>
 </resources>

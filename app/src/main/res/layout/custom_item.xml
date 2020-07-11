@@ -9,21 +9,35 @@
     <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+        <LinearLayout
+            android:id="@+id/first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+    >
         <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_title"
-        android:text="Title"
-        android:textSize="20dp"
-        style="@style/TextAppearance.AppCompat.Title"
-        android:layout_marginTop="3dp"
-        android:layout_marginStart="3dp"/>
+            android:id="@+id/txt_title"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="4dp"
+            android:maxLines="1"
+            android:text="@string/item_title"
+            android:textSize="20sp" />
+            <ImageView
+                android:id="@+id/img_emoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/ic_very_dissatisfied" />
+</LinearLayout>
     <LinearLayout
         android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_title"
+        android:layout_below="@id/first"
         android:layout_marginBottom="6dp"
         android:layout_marginStart="10dp"
         android:orientation="horizontal"
@@ -34,7 +48,7 @@
             android:layout_weight="1"
             android:id="@+id/txt_weight"
             android:layout_marginTop="4dp"
-            android:text="Weight:"
+            android:text="@string/item_weight"
             android:textColor="@color/color4"
             />
         <TextView
@@ -43,7 +57,7 @@
             android:layout_weight="1"
             android:id="@+id/txt_weekNo"
             android:layout_marginTop="4dp"
-            android:text="WeekNo:"
+            android:text="@string/item_weekno"
             android:textColor="@color/color4"
 
             />
@@ -64,7 +78,7 @@
             android:layout_weight="1"
             android:id="@+id/txt_fat"
             android:layout_marginTop="4dp"
-            android:text="Fat:"
+            android:text="@string/item_fat"
             android:textColor="@color/color4"
 
             />
@@ -74,21 +88,13 @@
             android:layout_weight="1"
             android:id="@+id/txt_water"
             android:layout_marginTop="4dp"
-            android:text="Water:"
+            android:text="@string/item_water"
             android:textColor="@color/color4"
 
             />
     </LinearLayout>
 
-        <ImageView
-            android:id="@+id/img_emoji"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/linear"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="3dp"
-            android:src="@drawable/ic_very_dissatisfied" />
+
 
 
 </RelativeLayout>

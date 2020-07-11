@@ -1,8 +1,7 @@
-package com.example.followup.view.ui;
+package com.MahmoudJoe333.followup.view.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -10,16 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.followup.Model.Item_Entity;
-import com.example.followup.R;
-import com.example.followup.view.logic.Item_Adapter;
-import com.example.followup.viewModel.DetailsActivity_ViewModel;
-import com.example.followup.viewModel.MainActivity_viewModel;
+import com.MahmoudJoe333.followup.Model.Item_Entity;
+import com.MahmoudJoe333.followup.R;
+import com.MahmoudJoe333.followup.view.logic.Item_Adapter;
+import com.MahmoudJoe333.followup.viewModel.MainActivity_viewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -47,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         mViewModel= ViewModelProviders.of(this).get(MainActivity_viewModel.class);
-        setTitle("I am Watching You");
+        setTitle(getResources().getString(R.string.mainTitle));
         BuildAdapter();
         observe();
         mundo_BTN=findViewById(R.id.undo);
@@ -74,7 +71,12 @@ public class MainActivity extends AppCompatActivity {
         mViewModel.GetAllList().observe(this, new Observer<List<Item_Entity>>() {
             @Override
             public void onChanged(List<Item_Entity> item_entities) {
+                mAdapter.setRes(getResources());
                 mAdapter.setList(item_entities);
+                if(item_entities.isEmpty())
+                    findViewById(R.id.noNote).setVisibility(View.VISIBLE);
+                else
+                    findViewById(R.id.noNote).setVisibility(View.GONE);
             }
         });
     }

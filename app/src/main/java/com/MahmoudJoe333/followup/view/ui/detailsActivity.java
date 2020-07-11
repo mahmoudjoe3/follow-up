@@ -1,4 +1,4 @@
-package com.example.followup.view.ui;
+package com.MahmoudJoe333.followup.view.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,10 +16,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.followup.Model.Item_Entity;
-import com.example.followup.R;
-import com.example.followup.view.logic.InBodyCalculation;
-import com.example.followup.viewModel.DetailsActivity_ViewModel;
+import com.MahmoudJoe333.followup.Model.Item_Entity;
+import com.MahmoudJoe333.followup.R;
+import com.MahmoudJoe333.followup.view.logic.InBodyCalculation;
+import com.MahmoudJoe333.followup.viewModel.DetailsActivity_ViewModel;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -50,15 +50,18 @@ public class detailsActivity extends AppCompatActivity {
         mViewModel= ViewModelProviders.of(this).get(DetailsActivity_ViewModel.class);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_exit);
 
+        InBodyProcess();
+
         if(getIntent().hasExtra(EXTRA_PROCESS_TYPE)) {
             process = getIntent().getStringExtra(EXTRA_PROCESS_TYPE);
             if (process.equalsIgnoreCase("update")) {
-                setTitle("Update your state");
+                setTitle(getResources().getString(R.string.datails_Title_update));
                 mItem = (Item_Entity) getIntent().getSerializableExtra(EXTRA_ITEM_KEY);
                 AssignValues();
+                mBurnRateBTN.performClick();
             }
             else {
-                setTitle("Add New State");
+                setTitle(getResources().getString(R.string.datails_Title_insert));
                 //date
                 Calendar calendar = Calendar.getInstance();
                 String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
@@ -66,6 +69,10 @@ public class detailsActivity extends AppCompatActivity {
             }
         }
 
+
+    }
+
+    private void InBodyProcess() {
         mBurnRateBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,20 +89,18 @@ public class detailsActivity extends AppCompatActivity {
                 Double weight=Double.valueOf(mWeight.getText().toString());
                 Integer age=Integer.parseInt(mAge.getText().toString());
 
-                double BurnRate= InBodyCalculation.getBurnRate(height,weight,age,gender);
-                double FatPercent=InBodyCalculation.getFatPercent(height,weight,age,gender);
-                double WaterPercent=InBodyCalculation.getWaterPercent(height,weight,age,gender);
-                String instruction=InBodyCalculation.getInstruction(height,weight,age,gender,level,FatPercent);
+                InBodyCalculation calculation=new InBodyCalculation(getResources());
+                double BurnRate= calculation.getBurnRate(height,weight,age,gender);
+                double FatPercent=calculation.getFatPercent(height,weight,age,gender);
+                double WaterPercent=calculation.getWaterPercent(height,weight,age,gender);
+                String instruction=calculation.getInstruction(height,weight,age,gender,level,FatPercent);
 
-                DecimalFormat format=new DecimalFormat("#.00");
-                BurnRate= Double.parseDouble(format.format(BurnRate));
-                WaterPercent= Double.parseDouble(format.format(WaterPercent));
-                FatPercent= Double.parseDouble(format.format(FatPercent));
+                DecimalFormat format=new DecimalFormat("#");
 
-                mBurnRate.setText(String.valueOf(BurnRate));
-                mFatPercent.setText(String.valueOf(FatPercent));
-                mWaterPercent.setText(String.valueOf(WaterPercent));
-                mEmojiRes.setImageResource(getEmojiSetHint(FatPercent,gender));
+                mBurnRate.setText(String.valueOf(format.format(BurnRate)));
+                mFatPercent.setText(String.valueOf(format.format(FatPercent)));
+                mWaterPercent.setText(String.valueOf(format.format(WaterPercent)));
+                mEmojiRes.setImageResource(getEmojiSetHint(calculation.replaceArabicNumbers(format.format(FatPercent)),gender));
                 mHint.setText(hint);
 
                 if(!save)
@@ -105,12 +110,14 @@ public class detailsActivity extends AppCompatActivity {
     }
 
     private void AssignValues() {
+
         mTitle.setText(mItem.getTitle());
         mWeekNo.setText(""+mItem.getWeekNo());
         mAge.setText(""+mItem.getAge());
         mWeight.setText(String.valueOf(mItem.getWeight()));
         int pos=(mItem.getGender().equalsIgnoreCase("male"))?0:1;
         mgenderspiner.setSelection(pos);
+        mlevelSpiner.setSelection(mItem.getLevel());
         mDate.setText(String.valueOf(mItem.getDate()));
         mHeight.setText(String.valueOf(mItem.getHeight()));
         mBurnRate.setText(String.valueOf(mItem.getBurn_rate()));
@@ -123,6 +130,7 @@ public class detailsActivity extends AppCompatActivity {
     }
 
     private int getEmojiSetHint(double fatPercent, String gender) {
+
         int imgID=R.drawable.ic_dead;
         if(gender.equalsIgnoreCase("female")) {
             if(fatPercent<10)//dead
@@ -275,7 +283,7 @@ public class detailsActivity extends AppCompatActivity {
         //Title, Weekno, Age, gender, Weight, Hight, BurnRate, FatPercent, WaterPercent, emojiRes, date, Comment,
 
         String  Title, gender, date, Comment;
-        Integer Weekno,Age, emojiRes;
+        Integer Weekno,Age, emojiRes,level;
         Double Weight, Height, BurnRate, FatPercent, WaterPercent;
 
         Title=mTitle.getText().toString();
@@ -286,16 +294,16 @@ public class detailsActivity extends AppCompatActivity {
         Age=Integer.parseInt(mAge.getText().toString());
         Weight=Double.valueOf(mWeight.getText().toString());
         Height=Double.valueOf(mHeight.getText().toString());
-        BurnRate=Double.valueOf(mBurnRate.getText().toString());
-        FatPercent=Double.valueOf(mFatPercent.getText().toString());
-        WaterPercent=Double.valueOf(mWaterPercent.getText().toString());
+        BurnRate=InBodyCalculation.replaceArabicNumbers(mBurnRate.getText().toString());
+        FatPercent=InBodyCalculation.replaceArabicNumbers(mFatPercent.getText().toString());
+        WaterPercent=InBodyCalculation.replaceArabicNumbers(mWaterPercent.getText().toString());
         emojiRes= getEmojiSetHint(FatPercent,gender);
-
+        level=mlevelSpiner.getSelectedItemPosition();
         if(Title.isEmpty()||Comment.isEmpty()||gender.isEmpty()||mAge.getText().toString().isEmpty()||mWeight.getText().toString().isEmpty()||mHeight.getText().toString().isEmpty()||mWeekNo.getText().toString().isEmpty()) {
             Toast.makeText(this, "Fill The Entire fields!!", Toast.LENGTH_SHORT).show();
             return null;
         }
         else
-            return new Item_Entity(Title,Weekno,Age,gender,Weight,Height,BurnRate,FatPercent,WaterPercent,emojiRes,date,Comment);
+            return new Item_Entity(Title,Weekno,Age,gender,Weight,Height,BurnRate,FatPercent,WaterPercent,emojiRes,date,Comment,level);
     }
 }

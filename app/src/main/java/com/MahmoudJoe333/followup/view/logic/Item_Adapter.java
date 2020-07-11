@@ -1,6 +1,7 @@
-package com.example.followup.view.logic;
+package com.MahmoudJoe333.followup.view.logic;
 
 import android.annotation.SuppressLint;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +11,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.followup.Model.Item_Entity;
-import com.example.followup.R;
+import com.MahmoudJoe333.followup.Model.Item_Entity;
+import com.MahmoudJoe333.followup.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Item_Adapter extends RecyclerView.Adapter<Item_Adapter.Holder> {
     private ArrayList<Item_Entity> mlist=new ArrayList<>();
+    private Resources mresources;
     public void setList(List<Item_Entity> list) {
         this.mlist=new ArrayList<>(list);
         notifyDataSetChanged();
+    }
+    public void setRes(Resources res)
+    {
+        mresources=res;
     }
     public Item_Entity getItemAt(int position)
     {
@@ -40,10 +46,11 @@ public class Item_Adapter extends RecyclerView.Adapter<Item_Adapter.Holder> {
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Item_Entity item=mlist.get(position);
         holder.mTitle.setText(item.getTitle());
-        holder.mWeight.setText("Weight: "+item.getWeight());
-        holder.mWeekNo.setText("Week No: "+item.getWeekNo());
-        holder.mFat.setText("Fat Percent: "+item.getFat_percent());
-        holder.mWater.setText("Water Percent: "+item.getWater_percent());
+
+        holder.mWeight.setText(mresources.getString(R.string.item_weight)+" "+item.getWeight()+"kg");
+        holder.mWeekNo.setText(mresources.getString(R.string.item_weekno)+" "+item.getWeekNo());
+        holder.mFat.setText(mresources.getString(R.string.item_fat)+" "+item.getFat_percent()+"%");
+        holder.mWater.setText(mresources.getString(R.string.item_water)+" "+item.getWater_percent()+"%");
         holder.mEmojiRes.setImageResource(item.getEmojiRes());
     }
 

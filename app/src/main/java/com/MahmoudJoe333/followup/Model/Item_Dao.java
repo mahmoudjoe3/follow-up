@@ -1,4 +1,4 @@
-package com.example.followup.Model;
+package com.MahmoudJoe333.followup.Model;
 
 
 

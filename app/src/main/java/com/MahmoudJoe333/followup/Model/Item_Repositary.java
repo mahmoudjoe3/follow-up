@@ -1,4 +1,4 @@
-package com.example.followup.Model;
+package com.MahmoudJoe333.followup.Model;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -33,8 +33,7 @@ public class Item_Repositary {
     {
         return mlist;
     }
-    public void deleteAllItem()
-    {
+    public void deleteAllItem() {
         new clearAsyncTask(mitem_dao).execute();
     }
 

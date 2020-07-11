@@ -1,4 +1,4 @@
-package com.example.followup.Model;
+package com.MahmoudJoe333.followup.Model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -22,12 +22,14 @@ public class Item_Entity implements Serializable {
     private Integer emojiRes;
     private String Date;
     private String comment;
+    private Integer level;
 
     public Item_Entity()
     {
 
     }
-    public Item_Entity(String title, Integer weekNo, Integer age, String gender, Double weight, Double height, Double burn_rate, Double fat_percent, Double water_percent, Integer emojiRes, String date, String comment) {
+
+    public Item_Entity(String title, Integer weekNo, Integer age, String gender, Double weight, Double height, Double burn_rate, Double fat_percent, Double water_percent, Integer emojiRes, String date, String comment, Integer level) {
         this.title = title;
         this.weekNo = weekNo;
         this.age = age;
@@ -40,6 +42,7 @@ public class Item_Entity implements Serializable {
         this.emojiRes = emojiRes;
         Date = date;
         this.comment = comment;
+        this.level = level;
     }
 
     public void setId(Integer id) {
@@ -94,6 +97,10 @@ public class Item_Entity implements Serializable {
         this.comment = comment;
     }
 
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -144,5 +151,9 @@ public class Item_Entity implements Serializable {
 
     public String getComment() {
         return comment;
+    }
+
+    public Integer getLevel() {
+        return level;
     }
 }

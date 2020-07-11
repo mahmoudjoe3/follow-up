@@ -1,4 +1,4 @@
-package com.example.followup.viewModel;
+package com.MahmoudJoe333.followup.viewModel;
 
 import android.app.Application;
 
@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.followup.Model.Item_Entity;
-import com.example.followup.Model.Item_Repositary;
+import com.MahmoudJoe333.followup.Model.Item_Entity;
+import com.MahmoudJoe333.followup.Model.Item_Repositary;
 
 import java.util.List;
 
