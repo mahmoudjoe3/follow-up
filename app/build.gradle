@@ -45,4 +45,8 @@ dependencies {
 //Recycler view
     implementation 'com.android.support:recyclerview-v7:29.0.0'
     implementation 'com.android.support:design:29.0.0'
+
+//butter knife
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 }

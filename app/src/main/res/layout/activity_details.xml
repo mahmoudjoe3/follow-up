@@ -155,9 +155,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 >
-                <EditText android:id="@+id/d_BurnRate"
+
+                <EditText
+                    android:id="@+id/d_BurnRate"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:enabled="false"
                     android:hint="@string/d_burn_rate"
                     android:inputType="numberDecimal"
                     android:maxLines="1" />
@@ -168,12 +171,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 >
-            <EditText android:id="@+id/d_fatPercent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/d_fat_percent"
-                android:inputType="numberDecimal"
-                android:maxLines="1" />
+
+                <EditText
+                    android:id="@+id/d_fatPercent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:enabled="false"
+                    android:hint="@string/d_fat_percent"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -181,12 +187,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 >
-            <EditText android:id="@+id/d_waterPercent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/d_water_percent"
-                android:inputType="numberDecimal"
-                android:maxLines="1" />
+
+                <EditText
+                    android:id="@+id/d_waterPercent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:enabled="false"
+                    android:hint="@string/d_water_percent"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -195,15 +204,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
-        <EditText
-            android:id="@+id/d_comment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textMultiLine"
-            android:textSize="16sp"
-            android:hint="@string/d_any_comment"
-            android:layout_margin="7dp"
-            android:gravity="start"/>
+
+            <EditText
+                android:id="@+id/d_comment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="7dp"
+                android:enabled="false"
+                android:gravity="start"
+                android:hint="@string/d_any_comment"
+                android:inputType="textMultiLine"
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>

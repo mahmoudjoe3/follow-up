@@ -1,4 +1,4 @@
-package com.MahmoudJoe333.followup.view.logic;
+package com.MahmoudJoe333.followup.view.ui;
 
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
@@ -17,34 +17,36 @@ import com.MahmoudJoe333.followup.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Item_Adapter extends RecyclerView.Adapter<Item_Adapter.Holder> {
-    private ArrayList<Item_Entity> mlist=new ArrayList<>();
+public class Item_Adapter extends RecyclerView.Adapter<Item_Adapter.myItem_holder> {
+    private ArrayList<Item_Entity> mlist = new ArrayList<>();
     private Resources mresources;
+
     public void setList(List<Item_Entity> list) {
-        this.mlist=new ArrayList<>(list);
+        this.mlist = new ArrayList<>(list);
         notifyDataSetChanged();
     }
-    public void setRes(Resources res)
-    {
-        mresources=res;
+
+    public void setRes(Resources res) {
+        mresources = res;
     }
-    public Item_Entity getItemAt(int position)
-    {
+
+    public Item_Entity getItemAt(int position) {
         return mlist.get(position);
     }
 
+
     @NonNull
     @Override
-    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_item,parent,false);
-        Holder holder=new Holder(view);
-        return holder;
+    public myItem_holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_item, parent, false);
+        myItem_holder myItem_holder = new myItem_holder(view);
+        return myItem_holder;
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull Holder holder, int position) {
-        Item_Entity item=mlist.get(position);
+    public void onBindViewHolder(@NonNull myItem_holder holder, int position) {
+        Item_Entity item = mlist.get(position);
         holder.mTitle.setText(item.getTitle());
 
         holder.mWeight.setText(mresources.getString(R.string.item_weight)+" "+item.getWeight()+"kg");
@@ -59,11 +61,11 @@ public class Item_Adapter extends RecyclerView.Adapter<Item_Adapter.Holder> {
         return mlist.size();
     }
 
-    public class Holder extends RecyclerView.ViewHolder{
+    public class myItem_holder extends RecyclerView.ViewHolder {
         public TextView mTitle,mWeight,mWeekNo,mFat,mWater;
         public ImageView mEmojiRes;
 
-        public Holder(@NonNull View itemView) {
+        public myItem_holder(@NonNull View itemView) {
             super(itemView);
             mTitle=itemView.findViewById(R.id.txt_title);
             mWeight=itemView.findViewById(R.id.txt_weight);
@@ -71,12 +73,12 @@ public class Item_Adapter extends RecyclerView.Adapter<Item_Adapter.Holder> {
             mFat=itemView.findViewById(R.id.txt_fat);
             mWater=itemView.findViewById(R.id.txt_water);
             mEmojiRes=itemView.findViewById(R.id.img_emoji);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position=getAdapterPosition();
-                    if(mListener!=null&&position!=RecyclerView.NO_POSITION)
-                    {
+                    int position = getAdapterPosition();
+                    if (mListener != null && position != RecyclerView.NO_POSITION) {
                         mListener.OnClick(mlist.get(position));
                     }
                 }
@@ -84,9 +86,14 @@ public class Item_Adapter extends RecyclerView.Adapter<Item_Adapter.Holder> {
 
         }
     }
+
     private OnItemClickListener mListener;
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.mListener=listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mListener = listener;
     }
-    public interface OnItemClickListener{ void OnClick(Item_Entity item);}
+
+    public interface OnItemClickListener {
+        void OnClick(Item_Entity item);
+    }
 }
