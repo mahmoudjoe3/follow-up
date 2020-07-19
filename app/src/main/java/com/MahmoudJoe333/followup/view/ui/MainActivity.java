@@ -3,6 +3,7 @@ package com.MahmoudJoe333.followup.view.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        mViewModel= ViewModelProviders.of(this).get(MainActivity_viewModel.class);
+        mViewModel= new ViewModelProvider(this).get(MainActivity_viewModel.class);
         setTitle(getResources().getString(R.string.mainTitle));
         BuildAdapter();
         observe();
@@ -64,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
                     mundo_BTN.setVisibility(View.GONE);
             }
         });
-
     }
 
     private void observe() {

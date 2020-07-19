@@ -2,6 +2,7 @@ package com.MahmoudJoe333.followup.view.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.annotation.SuppressLint;
@@ -47,7 +48,7 @@ public class detailsActivity extends AppCompatActivity {
 
     private void init() {
         FindView();
-        mViewModel= ViewModelProviders.of(this).get(DetailsActivity_ViewModel.class);
+        mViewModel= new ViewModelProvider(this).get(DetailsActivity_ViewModel.class);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_exit);
 
         InBodyProcess();
