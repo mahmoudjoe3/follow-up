@@ -8,84 +8,87 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class Item_Repositary {
-    private Item_Dao mitem_dao;
-    private LiveData<List<Item_Entity>> mlist;
+    private Item_Dao itemDao;
+    private LiveData<List<Item_Entity>> data;
 
     public Item_Repositary(Application application) {
         followUpDataBase mdatabase = followUpDataBase.getInstance(application);
-        mitem_dao=mdatabase.getItemDao();
-        mlist=mitem_dao.getAllItem();
+        itemDao = mdatabase.getItemDao();
+        data = itemDao.getAllItem();
     }
 
-    public void insert(Item_Entity item)
-    {
-        new insertAsyncTask(mitem_dao).execute(item);
+    public void insert(Item_Entity item) {
+        new insertAsyncTask(itemDao).execute(item);
     }
-    public void update(Item_Entity item)
-    {
-        new updateAsyncTask(mitem_dao).execute(item);
+
+    public void update(Item_Entity item) {
+        new updateAsyncTask(itemDao).execute(item);
     }
-    public void delete(Item_Entity item)
-    {
-        new deleteAsyncTask(mitem_dao).execute(item);
+
+    public void delete(Item_Entity item) {
+        new deleteAsyncTask(itemDao).execute(item);
     }
-    public LiveData<List<Item_Entity>> getAllItem()
-    {
-        return mlist;
+
+    public LiveData<List<Item_Entity>> getAllItem() {
+        return data;
     }
+
     public void deleteAllItem() {
-        new clearAsyncTask(mitem_dao).execute();
+        new clearAsyncTask(itemDao).execute();
     }
 
-    private static class insertAsyncTask extends AsyncTask<Item_Entity,Void,Void>{
-        private Item_Dao item_dao;
+    private static class insertAsyncTask extends AsyncTask<Item_Entity, Void, Void> {
+        private Item_Dao Item_Dao;
 
-        public insertAsyncTask(Item_Dao item_dao) {
-            this.item_dao = item_dao;
+        public insertAsyncTask(Item_Dao Item_Dao) {
+            this.Item_Dao = Item_Dao;
         }
 
         @Override
         protected Void doInBackground(Item_Entity... item_entities) {
-            item_dao.insert(item_entities[0]);
+            Item_Dao.insert(item_entities[0]);
             return null;
         }
     }
-    private static class deleteAsyncTask extends AsyncTask<Item_Entity,Void,Void>{
-        private Item_Dao item_dao;
 
-        public deleteAsyncTask(Item_Dao item_dao) {
-            this.item_dao = item_dao;
+    private static class deleteAsyncTask extends AsyncTask<Item_Entity, Void, Void> {
+        private Item_Dao Item_Dao;
+
+        public deleteAsyncTask(Item_Dao Item_Dao) {
+            this.Item_Dao = Item_Dao;
         }
 
         @Override
         protected Void doInBackground(Item_Entity... item_entities) {
-            item_dao.delete(item_entities[0]);
+            Item_Dao.delete(item_entities[0]);
             return null;
         }
     }
-    private static class updateAsyncTask extends AsyncTask<Item_Entity,Void,Void>{
-        private Item_Dao item_dao;
 
-        public updateAsyncTask(Item_Dao item_dao) {
-            this.item_dao = item_dao;
+    private static class updateAsyncTask extends AsyncTask<Item_Entity, Void, Void> {
+        private Item_Dao Item_Dao;
+
+        public updateAsyncTask(Item_Dao Item_Dao) {
+            this.Item_Dao = Item_Dao;
         }
 
         @Override
         protected Void doInBackground(Item_Entity... item_entities) {
-            item_dao.update(item_entities[0]);
+            Item_Dao.update(item_entities[0]);
             return null;
         }
     }
-    private static class clearAsyncTask extends AsyncTask<Void,Void,Void>{
-        private Item_Dao item_dao;
 
-        public clearAsyncTask(Item_Dao item_dao) {
-            this.item_dao = item_dao;
+    private static class clearAsyncTask extends AsyncTask<Void, Void, Void> {
+        private Item_Dao Item_Dao;
+
+        public clearAsyncTask(Item_Dao Item_Dao) {
+            this.Item_Dao = Item_Dao;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            item_dao.deleteAllItem();
+            Item_Dao.deleteAllItem();
             return null;
         }
     }
