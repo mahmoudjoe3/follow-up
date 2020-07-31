@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.MahmoudJoe333.followup.Model.Item_Entity;
 import com.MahmoudJoe333.followup.R;
+import com.MahmoudJoe333.followup.databinding.ActivityMainBinding;
 import com.MahmoudJoe333.followup.viewModel.MainActivity_viewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -27,26 +29,17 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.noNote)
-    TextView mNoNoteTXT;
-    @BindView(R.id.Container)
-    RecyclerView mContainerRECYCLER;
-    @BindView(R.id.addNew)
-    FloatingActionButton mAddNewBTN;
-    @BindView(R.id.undo)
-    FloatingActionButton mUndoBTN;
-    
-    
     private MainActivity_viewModel mViewModel;
     Item_Adapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
     Stack<Item_Entity> mStack;
-
+    ActivityMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        binding= DataBindingUtil.setContentView(this,R.layout.activity_main);
+
         init();
         AddNewItem();
         Update();
@@ -63,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void Undo() {
-        mUndoBTN.setOnClickListener(new View.OnClickListener() {
+        binding.undo.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("RestrictedApi")
             @Override
             public void onClick(View v) {
@@ -72,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     mAdapter.notifyDataSetChanged();
                 }
                 if (mStack.isEmpty())
-                    mUndoBTN.setVisibility(View.GONE);
+                    binding.undo.setVisibility(View.GONE);
             }
         });
     }
@@ -84,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
                 mAdapter.setRes(getResources());
                 mAdapter.setList(item_entities);
                 if (item_entities.isEmpty())
-                    mNoNoteTXT.setVisibility(View.VISIBLE);
+                    binding.noNote.setVisibility(View.VISIBLE);
                 else
-                    mNoNoteTXT.setVisibility(View.GONE);
+                    binding.noNote.setVisibility(View.GONE);
             }
         });
     }
@@ -105,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
                 Item_Entity item = mAdapter.getItemAt(position);
                 mStack.push(item);
                 mViewModel.delete(item);
-                mUndoBTN.setVisibility(View.VISIBLE);
+                binding.undo.setVisibility(View.VISIBLE);
             }
-        }).attachToRecyclerView(mContainerRECYCLER);
+        }).attachToRecyclerView(binding.Container);
     }
 
     private void Update() {
@@ -123,8 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void AddNewItem() {
-        mAddNewBTN = findViewById(R.id.addNew);
-        mAddNewBTN.setOnClickListener(new View.OnClickListener() {
+        binding.addNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, detailsActivity.class);
@@ -135,11 +127,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void BuildAdapter() {
-        mContainerRECYCLER = findViewById(R.id.Container);
+
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new Item_Adapter();
-        mContainerRECYCLER.setAdapter(mAdapter);
-        mContainerRECYCLER.setHasFixedSize(true);
-        mContainerRECYCLER.setLayoutManager(mLayoutManager);
+        binding.Container.setAdapter(mAdapter);
+        binding.Container.setHasFixedSize(true);
+        binding.Container.setLayoutManager(mLayoutManager);
     }
 }
